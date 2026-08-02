@@ -85,10 +85,12 @@ CREATE TABLE IF NOT EXISTS employees (
     INDEX idx_employees_joining (date_of_joining)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Add foreign key for department head after employees table exists
-ALTER TABLE departments
-    ADD CONSTRAINT fk_department_head
-    FOREIGN KEY (head_id) REFERENCES employees(id) ON DELETE SET NULL;
+-- Add foreign key for department head after employees table exists (idempotent)
+SET @fk_exist := (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = DATABASE() AND CONSTRAINT_NAME = 'fk_department_head');
+SET @fk_sql := IF(@fk_exist = 0, 'ALTER TABLE departments ADD CONSTRAINT fk_department_head FOREIGN KEY (head_id) REFERENCES employees(id) ON DELETE SET NULL', 'SELECT 1');
+PREPARE stmt_fk FROM @fk_sql;
+EXECUTE stmt_fk;
+DEALLOCATE PREPARE stmt_fk;
 
 -- ============================================================
 -- 4. Attendance Table – Daily Attendance Records
