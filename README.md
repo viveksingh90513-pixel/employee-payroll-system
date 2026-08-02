@@ -1,153 +1,85 @@
-# 💼 PayRoll Pro – Employee Payroll Management System
+# 💼 PayRoll Pro – Enterprise MERN Employee Payroll System
 
-[![Node.js](https://img.shields.io/badge/Backend-Node.js_v18+-green?style=for-the-badge&logo=nodedotjs)](https://nodejs.org/)
-[![React](https://img.shields.io/badge/Frontend-React_18-blue?style=for-the-badge&logo=react)](https://react.dev/)
-[![MySQL](https://img.shields.io/badge/Database-MySQL-00758F?style=for-the-badge&logo=mysql)](https://www.mysql.com/)
+[![Frontend](https://img.shields.io/badge/Frontend-Vercel-000000?style=for-the-badge&logo=vercel)](https://employee-payroll-system-lac.vercel.app)
+[![Backend](https://img.shields.io/badge/Backend-Railway-0B0D0E?style=for-the-badge&logo=railway)](https://employee-payroll-system-production-94fd.up.railway.app/api/health)
+[![Database](https://img.shields.io/badge/Database-Railway_MySQL-00758F?style=for-the-badge&logo=mysql)](https://railway.app)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
-**PayRoll Pro** is a modern, full-stack enterprise Employee & Payroll Management System designed to streamline human resource management, automated payroll generation, leave requests, attendance tracking, and downloadable PDF payslips.
+**PayRoll Pro** is a production-grade enterprise Human Resource & Payroll Management System (HRMS) built with **React 18 (Vite)**, **Node.js/Express**, and **MySQL**. It features real-time attendance tracking, leave management, automated monthly payroll generation, PDF payslip downloads, CSV data exporting, DDoS rate limiting, and persistent dark mode.
 
 ---
 
-## 🔑 Default Credentials
+## 🌐 Live Production Application
 
-> **Admin Account**
-> - **Email:** `viveksingh90513@gmail.com`
-> - **Password:** `VIVE@2004`
-> - **Role:** Administrator (Full Access)
-
----
-
-## ✨ Features
-
-- 👥 **Employee Management**: Create, edit, search, and manage detailed employee records (personal data, bank details, designation, department).
-- 💰 **Automated Payroll Processing**: Calculate basic pay, allowances (HRA, DA, Special), deductions (PF, ESI, Tax), net salary, and generate monthly payslips.
-- 📄 **PDF Payslip Generation**: Auto-generate downloadable and printable PDF payslips with official company formatting.
-- 📅 **Attendance Tracking**: Monitor daily check-ins, check-outs, working hours, and status (Present, Absent, Half-Day, Late).
-- 🏖️ **Leave Management System**: Submit leave applications (Casual, Sick, Earned), track leave balances, and approve/reject leave requests.
-- 📊 **Interactive Dashboard**: Real-time stats on total staff, monthly payroll expenditure, pending leave approvals, and recent activities.
-- 🔒 **Authentication & RBAC**: Secure JWT-based authentication with Role-Based Access Control (Admin, HR, Employee).
+- **Live Web App (Vercel)**: 👉 [https://employee-payroll-system-lac.vercel.app](https://employee-payroll-system-lac.vercel.app)
+- **Live Backend API (Railway)**: 👉 [https://employee-payroll-system-production-94fd.up.railway.app/api](https://employee-payroll-system-production-94fd.up.railway.app/api)
+- **Live API Health Check**: 👉 [https://employee-payroll-system-production-94fd.up.railway.app/api/health](https://employee-payroll-system-production-94fd.up.railway.app/api/health)
 
 ---
 
-## 🛠️ Tech Stack
+## 🔑 Demo Credentials
+
+| Role | Email | Password | Access Level |
+| :--- | :--- | :--- | :--- |
+| 👑 **Administrator** | `admin@payrollpro.com` | `Admin@123` | Full System Control, User Creation, Reports |
+| 👔 **HR Manager** | `hr1@payrollpro.com` | `Hr@12345` | Employee Directory, Attendance, Payroll |
+| 👨‍💼 **Employee** | `emp1@payrollpro.com` | `Emp@12345` | Personal Dashboard, Payslips, Leave Application |
+
+---
+
+## ✨ Enterprise Features
+
+- 👥 **Workforce Management**: Complete CRUD employee management with designations, departments, join dates, and salary structures.
+- 💰 **Automated Payroll Engine**: Compute gross pay, allowances (HRA, DA, Special, TA), deductions (PF, ESI, Income Tax, PT), and net pay.
+- 📄 **PDF Payslip Generation**: Dynamic client/server PDF payslip generation and instant downloading.
+- 📊 **CSV Data Exports**: Export complete Employee directories, Payroll records, and Attendance reports to CSV with 1-click.
+- 🌙 **Dark Mode Support**: Context-driven theme switcher with `localStorage` persistence and smooth CSS variable transitions.
+- 🛡️ **Security Protection**: Rate limiting (`express-rate-limit`) against brute-force & DDoS, bcrypt password hashing, and JWT authorization.
+- ⚡ **Optimized Performance**: Code-split React routes via `React.lazy()` and `<Suspense>`, fast Vite build bundles, and idempotent database auto-seeding on bootup.
+
+---
+
+## 🛠️ Architecture & Tech Stack
 
 ### **Frontend**
-- **Framework:** React 18 (Vite)
-- **State & Router:** React Router v6, Axios
-- **Styling:** CSS3, Modern Dark/Light Theme UI
-- **Icons:** React Icons
+- **Framework**: React 18 (Vite)
+- **State & Routing**: React Context API, React Router v6, Axios
+- **Styling & UI**: Custom Vanilla CSS Tokens, Dark Mode Switcher, Skeleton Loaders
+- **Hosting**: Deployed on **Vercel** with SPA rewrites
 
 ### **Backend**
-- **Runtime:** Node.js & Express.js
-- **Database Driver:** `mysql2/promise` with Connection Pooling
-- **Authentication:** JSON Web Tokens (JWT), `bcryptjs`
-- **File & PDF Processing:** PDFKit, Multer
+- **Runtime**: Node.js & Express.js
+- **Database Driver**: `mysql2/promise` with Connection Pooling & Auto-seeding
+- **Security & Limits**: `express-rate-limit`, `helmet`, `cors`, `jsonwebtoken`, `bcryptjs`
+- **Hosting**: Deployed on **Railway** with automatic MySQL connection
 
 ---
 
-## 📂 Project Structure
+## 🚀 Local Development Setup
 
-```
-Employee Payroll System/
-├── client/                     # React Frontend (Vite)
-│   ├── src/
-│   │   ├── api/                # Axios instance & API client
-│   │   ├── components/         # Reusable UI Components & Navigation
-│   │   ├── context/            # Authentication State Context
-│   │   ├── pages/              # Dashboard, Employees, Payroll, Leaves, Settings
-│   │   └── utils/              # Helper functions & constants
-│   └── package.json
-│
-├── server/                     # Express Backend API
-│   ├── config/                 # Database connection pool & SSL config
-│   ├── controllers/            # Business logic for Auth, Employees, Payroll, Leaves
-│   ├── database/               # SQL Schema & Seed scripts
-│   ├── middleware/             # Auth, Role Verification, Upload middleware
-│   ├── models/                 # MySQL Data Access Layer (User, Employee, Payroll, Leave)
-│   ├── routes/                 # Express API Endpoints
-│   ├── utils/                  # PDF Generator, Email Service, Helper utilities
-│   └── server.js               # Main Express application server
-```
-
----
-
-## 💻 Local Setup & Installation
-
-### Prerequisites
-- Node.js (v18 or higher)
-- MySQL Server (Local or Cloud)
-- Git
-
-### 1. Clone Repository
+### 1. Clone the Repository
 ```bash
-git clone https://github.com/viveksingh90511-cloud/employee-payroll-system.git
+git clone https://github.com/viveksingh90513-pixel/employee-payroll-system.git
 cd employee-payroll-system
 ```
 
-### 2. Configure Backend Environment
-Create a `.env` file in the `server/` directory:
-```env
-PORT=5000
-NODE_ENV=development
-
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=your_mysql_password
-DB_NAME=payroll_pro
-
-JWT_SECRET=payrollpro_jwt_secret_key_2026
-JWT_EXPIRES_IN=24h
-
-CLIENT_URL=http://localhost:5173
-```
-
-### 3. Initialize Database
-Import schema and seed data into MySQL:
-```bash
-mysql -u root -p < server/database/schema.sql
-mysql -u root -p < server/database/seed.sql
-```
-
-### 4. Install Dependencies & Run
-#### **Start Server (Port 5000)**
+### 2. Configure Backend
 ```bash
 cd server
 npm install
 npm start
 ```
+*The server will start on `http://localhost:5000` and automatically verify & seed database schema on boot.*
 
-#### **Start Frontend (Port 5173)**
+### 3. Configure Frontend
 ```bash
 cd ../client
 npm install
 npm run dev
 ```
-
-Visit `http://localhost:5173` in your browser.
-
----
-
-## 📡 Key API Endpoints
-
-| Method | Endpoint | Description | Auth Required |
-| :--- | :--- | :--- | :--- |
-| `POST` | `/api/auth/login` | Authenticate user & receive JWT token | ❌ |
-| `GET` | `/api/auth/me` | Fetch authenticated user profile | ✅ |
-| `GET` | `/api/dashboard/stats` | Retrieve overall metrics & charts | ✅ (Admin/HR) |
-| `GET` | `/api/employees` | List all employees | ✅ |
-| `POST` | `/api/employees` | Create new employee record | ✅ (Admin/HR) |
-| `GET` | `/api/payroll` | Fetch monthly payroll records | ✅ |
-| `POST` | `/api/payroll/generate` | Process & generate monthly payroll | ✅ (Admin/HR) |
-| `GET` | `/api/payroll/download/:id` | Download PDF payslip | ✅ |
-| `GET` | `/api/leaves` | List leave requests | ✅ |
-| `POST` | `/api/leaves/apply` | Submit leave application | ✅ |
+*The frontend web app will start on `http://localhost:5173`.*
 
 ---
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-Developed with ❤️ by **Vivek Kumar Singh**.
+## 📄 License
+Distributed under the MIT License. Built with ❤️ for enterprise HR & Payroll teams.
