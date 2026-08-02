@@ -92,6 +92,24 @@ const initializeDatabase = async () => {
       console.log('✅ Database tables already exist');
     }
 
+    // Auto-seed database if users table is empty
+    try {
+      const [userCount] = await connection.query(`SELECT COUNT(*) as count FROM users`);
+      if (userCount[0]?.count === 0) {
+        const seedPath = path.join(__dirname, '..', 'database', 'seed.sql');
+        if (fs.existsSync(seedPath)) {
+          const seed = fs.readFileSync(seedPath, 'utf8');
+          const cleanSeed = seed
+            .replace(/CREATE DATABASE.*?;/gi, '')
+            .replace(/USE\s+\w+;/gi, '');
+          await connection.query(cleanSeed);
+          console.log('✅ Database seeded with initial users successfully');
+        }
+      }
+    } catch (seedErr) {
+      console.warn('⚠️ Auto-seed check failed:', seedErr.message);
+    }
+
     // Auto-migrate new authentication & attendance columns
     try {
       const [columns] = await connection.query(
