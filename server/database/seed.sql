@@ -15,7 +15,7 @@ USE payroll_pro;
 -- Note: These hashes are for bcrypt rounds=10. The application will
 -- generate proper hashes at runtime. These are pre-computed for seeding.
 
-INSERT INTO users (email, password_hash, role, is_active) VALUES
+INSERT IGNORE INTO users (email, password_hash, role, is_active) VALUES
 -- Password: Admin@123 / VIVE@2004
 ('admin@payrollpro.com', '$2a$10$lOFBGK8XY3XQWpPvjhkBseiQoKh3ggCjR8FZ3yaGJNmVsi6o/2dv.', 'admin', 1),
 ('viveksingh90513@gmail.com', '$2a$10$DV.Urr/be9Q17tPBuYIL4eQd8MlxcjSbteExD2KToRbUt2ntq8hYG', 'admin', 1),
@@ -48,7 +48,7 @@ INSERT INTO users (email, password_hash, role, is_active) VALUES
 -- ============================================================
 -- Seed Departments
 -- ============================================================
-INSERT INTO departments (name, description, is_active) VALUES
+INSERT IGNORE INTO departments (name, description, is_active) VALUES
 ('Engineering', 'Software development and technical operations', 1),
 ('Human Resources', 'HR management, recruitment, and employee relations', 1),
 ('Finance', 'Accounting, financial planning, and payroll', 1),
@@ -60,7 +60,7 @@ INSERT INTO departments (name, description, is_active) VALUES
 -- ============================================================
 -- Seed Employees
 -- ============================================================
-INSERT INTO employees (user_id, emp_code, first_name, last_name, phone, dob, gender, address, city, state, zip_code, department_id, designation, date_of_joining, employment_type, bank_name, bank_account_no, ifsc_code, pan_number) VALUES
+INSERT IGNORE INTO employees (user_id, emp_code, first_name, last_name, phone, dob, gender, address, city, state, zip_code, department_id, designation, date_of_joining, employment_type, bank_name, bank_account_no, ifsc_code, pan_number) VALUES
 -- Admin user as employee
 (1, 'EMP001', 'Vivek Kumar', 'Singh', '9876543210', '1985-06-15', 'male', '12, MG Road, Sector 5', 'Bangalore', 'Karnataka', '560001', 1, 'Chief Technology Officer', '2020-01-15', 'full-time', 'State Bank of India', '1234567890123', 'SBIN0001234', 'ABCPK1234A'),
 -- HR users
@@ -96,7 +96,7 @@ UPDATE departments SET head_id = 11 WHERE name = 'Design';
 -- ============================================================
 -- Seed Salary Structures
 -- ============================================================
-INSERT INTO salary_structures (employee_id, basic_salary, hra, da, ta, medical_allowance, special_allowance, pf_deduction, esi_deduction, tax_deduction, professional_tax, other_deductions, effective_from, is_current) VALUES
+INSERT IGNORE INTO salary_structures (employee_id, basic_salary, hra, da, ta, medical_allowance, special_allowance, pf_deduction, esi_deduction, tax_deduction, professional_tax, other_deductions, effective_from, is_current) VALUES
 (1,  120000, 48000, 12000, 5000, 3000, 12000, 14400, 0, 20000, 200, 0, '2020-01-15', 1),
 (2,  80000,  32000, 8000,  3000, 2000, 8000,  9600,  0, 12000, 200, 0, '2021-03-01', 1),
 (3,  45000,  18000, 4500,  2000, 1500, 4000,  5400,  833, 5000, 200, 0, '2022-06-15', 1),
@@ -114,7 +114,7 @@ INSERT INTO salary_structures (employee_id, basic_salary, hra, da, ta, medical_a
 -- ============================================================
 -- Seed Attendance (last 5 working days as sample)
 -- ============================================================
-INSERT INTO attendance (employee_id, date, check_in, check_out, status, hours_worked, marked_by) VALUES
+INSERT IGNORE INTO attendance (employee_id, date, check_in, check_out, status, hours_worked, marked_by) VALUES
 -- Day 1
 (1,  '2026-07-14', '09:00:00', '18:00:00', 'present', 9.00, 2),
 (2,  '2026-07-14', '09:15:00', '18:00:00', 'present', 8.75, 2),
@@ -147,7 +147,7 @@ INSERT INTO attendance (employee_id, date, check_in, check_out, status, hours_wo
 -- ============================================================
 -- Seed Leave Requests
 -- ============================================================
-INSERT INTO leaves (employee_id, leave_type, start_date, end_date, days, reason, status, approved_by, admin_remarks, action_on) VALUES
+INSERT IGNORE INTO leaves (employee_id, leave_type, start_date, end_date, days, reason, status, approved_by, admin_remarks, action_on) VALUES
 (12, 'casual',   '2026-07-14', '2026-07-15', 2, 'Family function',                      'approved', 2, 'Approved. Enjoy!', '2026-07-12 10:30:00'),
 (6,  'sick',     '2026-07-14', '2026-07-14', 1, 'Feeling unwell, need rest',              'approved', 2, 'Take care',        '2026-07-13 15:00:00'),
 (5,  'casual',   '2026-07-15', '2026-07-15', 1, 'Personal work',                          'approved', 3, NULL,               '2026-07-14 09:00:00'),
@@ -160,7 +160,7 @@ INSERT INTO leaves (employee_id, leave_type, start_date, end_date, days, reason,
 -- ============================================================
 -- Seed Payroll for June 2026
 -- ============================================================
-INSERT INTO payrolls (employee_id, month, year, working_days, present_days, leave_days, absent_days, basic_pay, hra, da, ta, medical_allowance, special_allowance, total_earnings, pf_deduction, esi_deduction, tax_deduction, professional_tax, other_deductions, loss_of_pay, total_deductions, gross_pay, net_pay, status, generated_by) VALUES
+INSERT IGNORE INTO payrolls (employee_id, month, year, working_days, present_days, leave_days, absent_days, basic_pay, hra, da, ta, medical_allowance, special_allowance, total_earnings, pf_deduction, esi_deduction, tax_deduction, professional_tax, other_deductions, loss_of_pay, total_deductions, gross_pay, net_pay, status, generated_by) VALUES
 (1,  6, 2026, 22, 22, 0, 0, 120000, 48000, 12000, 5000, 3000, 12000, 200000, 14400, 0,   20000, 200, 0, 0, 34600, 200000, 165400, 'paid', 1),
 (2,  6, 2026, 22, 21, 1, 0, 80000,  32000, 8000,  3000, 2000, 8000,  133000, 9600,  0,   12000, 200, 0, 0, 21800, 133000, 111200, 'paid', 1),
 (3,  6, 2026, 22, 22, 0, 0, 45000,  18000, 4500,  2000, 1500, 4000,  75000,  5400,  833, 5000,  200, 0, 0, 11433, 75000,  63567,  'paid', 1),

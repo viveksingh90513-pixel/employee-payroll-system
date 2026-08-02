@@ -64,71 +64,50 @@ const initializeDatabase = async () => {
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``);
     await connection.query(`USE \`${dbName}\``);
 
-    // Check if tables already exist by looking for the users table
-    const [tables] = await connection.query(
-      `SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'users'`,
-      [dbName]
-    );
+    // 1. Run schema (idempotent CREATE TABLE IF NOT EXISTS)
+    const schemaPath = path.join(__dirname, '..', 'database', 'schema.sql');
+    if (fs.existsSync(schemaPath)) {
+      const schema = fs.readFileSync(schemaPath, 'utf8');
+      const cleanSchema = schema
+        .replace(/CREATE DATABASE.*?;/gi, '')
+        .replace(/USE\s+\w+;/gi, '');
 
-    if (tables.length === 0) {
-      // Tables don't exist – run the schema SQL file
-      const schemaPath = path.join(__dirname, '..', 'database', 'schema.sql');
+      const statements = cleanSchema
+        .split(';')
+        .map(s => s.trim())
+        .filter(s => s.length > 0);
 
-      if (fs.existsSync(schemaPath)) {
-        const schema = fs.readFileSync(schemaPath, 'utf8');
-        // Remove CREATE DATABASE and USE statements since we've already selected the DB
-        const cleanSchema = schema
-          .replace(/CREATE DATABASE.*?;/gi, '')
-          .replace(/USE\s+\w+;/gi, '');
-
-        const statements = cleanSchema
-          .split(';')
-          .map(s => s.trim())
-          .filter(s => s.length > 0);
-
-        for (const stmt of statements) {
-          try {
-            await connection.query(stmt);
-          } catch (stmtErr) {
-            console.warn('⚠️ Schema statement notice:', stmtErr.message);
-          }
+      for (const stmt of statements) {
+        try {
+          await connection.query(stmt);
+        } catch (stmtErr) {
+          // Ignore table/constraint existence notices
         }
-        console.log('✅ Database schema created successfully');
-      } else {
-        console.warn('⚠️ Schema file not found at:', schemaPath);
       }
-    } else {
-      console.log('✅ Database tables already exist');
+      console.log('✅ Database schema verified/created successfully');
     }
 
-    // Auto-seed database if users table is empty
-    try {
-      const [userCount] = await connection.query(`SELECT COUNT(*) as count FROM users`);
-      if (userCount[0]?.count === 0) {
-        const seedPath = path.join(__dirname, '..', 'database', 'seed.sql');
-        if (fs.existsSync(seedPath)) {
-          const seed = fs.readFileSync(seedPath, 'utf8');
-          const cleanSeed = seed
-            .replace(/CREATE DATABASE.*?;/gi, '')
-            .replace(/USE\s+\w+;/gi, '');
+    // 2. Run seed (idempotent INSERT IGNORE INTO)
+    const seedPath = path.join(__dirname, '..', 'database', 'seed.sql');
+    if (fs.existsSync(seedPath)) {
+      const seed = fs.readFileSync(seedPath, 'utf8');
+      const cleanSeed = seed
+        .replace(/CREATE DATABASE.*?;/gi, '')
+        .replace(/USE\s+\w+;/gi, '');
 
-          const seedStmts = cleanSeed
-            .split(';')
-            .map(s => s.trim())
-            .filter(s => s.length > 0);
+      const seedStmts = cleanSeed
+        .split(';')
+        .map(s => s.trim())
+        .filter(s => s.length > 0);
 
-          for (const sStmt of seedStmts) {
-            try {
-              await connection.query(sStmt);
-            } catch (sErr) {
-              console.warn('⚠️ Seed statement notice:', sErr.message);
-            }
-          }
-          console.log('✅ Database seeded with initial users successfully');
+      for (const sStmt of seedStmts) {
+        try {
+          await connection.query(sStmt);
+        } catch (sErr) {
+          // Ignore duplicate row notices
         }
       }
-    } catch (seedErr) {
-      console.warn('⚠️ Auto-seed check notice:', seedErr.message);
+      console.log('✅ Database seed records verified/inserted successfully');
     }
 
     // Auto-migrate new authentication & attendance columns
