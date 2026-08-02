@@ -60,9 +60,7 @@ const initializeDatabase = async () => {
       multipleStatements: true,
     });
 
-    const dbName = process.env.DB_NAME || 'payroll_pro';
-
-    // Create the database if it doesn't exist
+    // Create the database if it doesn't exist using the configured database name (Railway or local)
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``);
     await connection.query(`USE \`${dbName}\``);
 
