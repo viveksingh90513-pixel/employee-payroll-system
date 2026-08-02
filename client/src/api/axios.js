@@ -10,7 +10,9 @@ const getBaseURL = () => {
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
-  return '/api';
+  return process.env.NODE_ENV === 'production' 
+    ? 'https://employee-payroll-system-production-94fd.up.railway.app/api'
+    : '/api';
 };
 
 // Create axios instance with default config
@@ -69,7 +71,7 @@ export const getUploadURL = (filename) => {
   if (filename.startsWith('http') || filename.startsWith('data:')) return filename;
   const baseUrl = import.meta.env.VITE_API_URL 
     ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '') 
-    : 'http://localhost:5000';
+    : 'https://employee-payroll-system-production-94fd.up.railway.app';
   return `${baseUrl}/uploads/${filename}`;
 };
 
