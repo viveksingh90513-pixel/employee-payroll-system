@@ -1,0 +1,150 @@
+/*
+ * PayRoll Pro – Form Styles
+ * Enhanced form layouts and multi-section form designs.
+ */
+
+.form-section {
+  background: var(--bg-card);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.form-section-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--gray-800);
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-section-title .icon {
+  color: var(--primary-500);
+}
+
+.form-section-subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--gray-500);
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+/* Salary Breakdown Card */
+.salary-breakdown {
+  background: linear-gradient(135deg, var(--primary-50), rgba(139, 92, 246, 0.05));
+  border: 1px solid var(--primary-100);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+}
+
+.salary-breakdown-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--primary-700);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.salary-breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  font-size: var(--font-size-sm);
+  color: var(--gray-700);
+}
+
+.salary-breakdown-item.total {
+  border-top: 2px solid var(--primary-200);
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  font-weight: 700;
+  font-size: var(--font-size-base);
+  color: var(--primary-700);
+}
+
+.salary-breakdown-item .label {
+  color: var(--gray-600);
+}
+
+.salary-breakdown-item .value {
+  font-weight: 600;
+  font-family: 'SF Mono', monospace;
+}
+
+.salary-breakdown-item .value.negative {
+  color: var(--danger);
+}
+
+/* File Upload Area */
+.file-upload-area {
+  border: 2px dashed var(--gray-300);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: var(--gray-50);
+}
+
+.file-upload-area:hover {
+  border-color: var(--primary-400);
+  background: var(--primary-50);
+}
+
+.file-upload-area.has-file {
+  border-color: var(--success);
+  background: var(--success-light);
+}
+
+.file-upload-icon {
+  font-size: 2.5rem;
+  color: var(--gray-400);
+  margin-bottom: 0.75rem;
+}
+
+.file-upload-text {
+  font-size: var(--font-size-sm);
+  color: var(--gray-600);
+}
+
+.file-upload-hint {
+  font-size: var(--font-size-xs);
+  color: var(--gray-400);
+  margin-top: 0.25rem;
+}
+
+/* Profile Photo Preview */
+.profile-photo-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  border: 3px solid var(--primary-200);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
+}
+
+/* Input Group Styling */
+.input-group .input-group-text {
+  background: var(--gray-50);
+  border-color: var(--gray-200);
+  color: var(--gray-500);
+  font-size: var(--font-size-sm);
+}
+
+/* Custom Switch */
+.form-switch .form-check-input {
+  width: 2.5rem;
+  height: 1.25rem;
+}
+
+.form-switch .form-check-input:checked {
+  background-color: var(--primary-500);
+  border-color: var(--primary-500);
+}

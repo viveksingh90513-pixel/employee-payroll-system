@@ -1,0 +1,148 @@
+/*
+ * PayRoll Pro – Table Styles
+ * Enhanced DataTable with search, pagination, and hover effects.
+ */
+
+.data-table-container {
+  background: var(--bg-card);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.data-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--gray-100);
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.data-table-search {
+  position: relative;
+  min-width: 240px;
+}
+
+.data-table-search input {
+  padding-left: 2.5rem;
+  border-radius: var(--radius-full);
+  background: var(--gray-50);
+  border: 1.5px solid var(--gray-200);
+  font-size: var(--font-size-sm);
+}
+
+.data-table-search input:focus {
+  background: var(--bg-card);
+}
+
+.data-table-search-icon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-400);
+  font-size: 0.875rem;
+}
+
+.data-table-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.data-table-wrapper {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.data-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--gray-100);
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.data-table-info {
+  font-size: var(--font-size-xs);
+  color: var(--gray-500);
+}
+
+/* Action Buttons in Table Rows */
+.table-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.table-action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 0.875rem;
+}
+
+.table-action-btn.view {
+  background: var(--primary-50);
+  color: var(--primary-600);
+}
+
+.table-action-btn.view:hover {
+  background: var(--primary-100);
+}
+
+.table-action-btn.edit {
+  background: var(--warning-light);
+  color: #b45309;
+}
+
+.table-action-btn.edit:hover {
+  background: #fde68a;
+}
+
+.table-action-btn.delete {
+  background: var(--danger-light);
+  color: var(--danger);
+}
+
+.table-action-btn.delete:hover {
+  background: #fecaca;
+}
+
+/* Empty State */
+.table-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.table-empty-icon {
+  font-size: 3rem;
+  color: var(--gray-300);
+  margin-bottom: 1rem;
+}
+
+.table-empty-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--gray-600);
+  margin-bottom: 0.25rem;
+}
+
+.table-empty-text {
+  font-size: var(--font-size-sm);
+  color: var(--gray-400);
+}
