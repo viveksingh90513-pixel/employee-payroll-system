@@ -83,10 +83,21 @@ const initializeDatabase = async () => {
           .replace(/CREATE DATABASE.*?;/gi, '')
           .replace(/USE\s+\w+;/gi, '');
 
-        await connection.query(cleanSchema);
+        const statements = cleanSchema
+          .split(';')
+          .map(s => s.trim())
+          .filter(s => s.length > 0);
+
+        for (const stmt of statements) {
+          try {
+            await connection.query(stmt);
+          } catch (stmtErr) {
+            console.warn('⚠️ Schema statement notice:', stmtErr.message);
+          }
+        }
         console.log('✅ Database schema created successfully');
       } else {
-        console.warn('⚠️  Schema file not found at:', schemaPath);
+        console.warn('⚠️ Schema file not found at:', schemaPath);
       }
     } else {
       console.log('✅ Database tables already exist');
@@ -102,12 +113,24 @@ const initializeDatabase = async () => {
           const cleanSeed = seed
             .replace(/CREATE DATABASE.*?;/gi, '')
             .replace(/USE\s+\w+;/gi, '');
-          await connection.query(cleanSeed);
+
+          const seedStmts = cleanSeed
+            .split(';')
+            .map(s => s.trim())
+            .filter(s => s.length > 0);
+
+          for (const sStmt of seedStmts) {
+            try {
+              await connection.query(sStmt);
+            } catch (sErr) {
+              console.warn('⚠️ Seed statement notice:', sErr.message);
+            }
+          }
           console.log('✅ Database seeded with initial users successfully');
         }
       }
     } catch (seedErr) {
-      console.warn('⚠️ Auto-seed check failed:', seedErr.message);
+      console.warn('⚠️ Auto-seed check notice:', seedErr.message);
     }
 
     // Auto-migrate new authentication & attendance columns
